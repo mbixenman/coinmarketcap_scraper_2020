@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup # gets you cool shit that we cannot find on our own
+from bs4 import BeautifulSoup # gets you cool stuff that we cannot find on our own
 import os
 import pandas as pd
 import glob
@@ -27,12 +27,14 @@ for one_file_name in glob.glob("html_files/*.html"):
 		currency_name = r.find("td", {"class":"cmc-table__cell--sort-by__name"}).find("a",{"class":"cmc-link"}).text
 		currency_marketcap = r.find("td",{"class":"cmc-table__cell--sort-by__market-cap"}).find("div",{"class":""}).text.replace("$","").replace(",","")
 		currency_supply = r.find("td",{"class":"cmc-table__cell--sort-by__circulating-supply"}).find("div",{"class":""}).text
+		currency_link = r.find("td",{"class":"cmc-table__cell--sort-by__name"}).find("a",{"class":"cmc-link"})["href"]
 		df = df.append({
 				'time': scraping_time,
 				'name': currency_name,
 				'price': currency_price,
 				'marketcap': currency_marketcap,
-				'supply': currency_supply
+				'supply': currency_supply,
+				'link': currency_link
 			}, ignore_index=True)
 
 	
